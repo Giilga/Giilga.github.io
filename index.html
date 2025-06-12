@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Te amo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .spotify-player-container {
+            width: 100%;
+            max-width: 360px;
+            background-color: #000000;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+        }
+
+        .top-bar .icon {
+            width: 24px;
+            height: 24px;
+            fill: #b3b3b3;
+        }
+
+        .top-bar .title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .album-art {
+            margin-top: 24px;
+            width: 100%;
+            padding-bottom: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 6px;
+        }
+
+        .album-art img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .song-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 24px;
+        }
+
+        .song-details h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .song-details p {
+            font-size: 16px;
+            margin: 4px 0 0 0;
+            color: #b3b3b3;
+        }
+        
+        .like-button .icon {
+            width: 24px;
+            height: 24px;
+            fill: #ffffff;
+        }
+        
+        .progress-bar-container {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: #535353;
+            border-radius: 2px;
+            position: relative;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%; /* Starts at 0, updated by JS */
+            background-color: #ffffff;
+            border-radius: 2px;
+            position: relative;
+        }
+        
+        .progress-bar-handle {
+            width: 12px;
+            height: 12px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            right: -6px;
+            transform: translateY(-50%);
+            display: none;
+        }
+
+        .timestamps {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #b3b3b3;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+        }
+
+        .controls .icon {
+            width: 28px;
+            height: 28px;
+            fill: #b3b3b3;
+        }
+        
+        .play-button {
+            width: 64px;
+            height: 64px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.1s ease-in-out;
+        }
+
+        .play-button:hover {
+            transform: scale(1.05);
+        }
+
+        .play-button .icon {
+            width: 28px;
+            height: 28px;
+            fill: #000000;
+        }
+        
+        #soundcloud-player-container {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="spotify-player-container">
+        <!-- Top Bar, Album Art, Song Info (same as before) -->
+        <header class="top-bar">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg>
+            <span class="title">Te amo</span>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+        </header>
+        <div class="album-art">
+            <img src="https://i.imgur.com/qTj1rQI.jpeg" alt="Album Art">
+        </div>
+        <div class="song-info">
+            <div class="song-details">
+                <h2>Planos</h2>
+                <p>BK, Luccas Carlos</p>
+            </div>
+            <div class="like-button">
+                 <svg class="icon" viewBox="0 0 24 24"><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.05.05-.05-.05C7.32 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.32 5.74-7.95 10.05z"></path></svg>
+            </div>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-bar-fill" id="progressBarFill">
+                    <div class="progress-bar-handle" id="progressBarHandle"></div>
+                </div>
+            </div>
+            <div class="timestamps">
+                <span id="currentTime">0:00</span>
+                <span id="totalTime">0:00</span>
+            </div>
+        </div>
+        <div class="controls">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"></path></svg>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"></path></svg>
+            <div class="play-button" id="playButton">
+                <svg id="playIcon" class="icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+            </div>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"></path></svg>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"></path></svg>
+        </div>
+    </div>
+    
+    <!-- This container will hold the hidden SoundCloud widget -->
+    <div id="soundcloud-player-container"></div>
+
+    <!-- SoundCloud Widget API script -->
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script>
+        // --- DOM Elements ---
+        const playButton = document.getElementById('playButton');
+        const playIcon = document.getElementById('playIcon');
+        const currentTimeEl = document.getElementById('currentTime');
+        const totalTimeEl = document.getElementById('totalTime');
+        const progressBar = document.getElementById('progressBar');
+        const progressBarFill = document.getElementById('progressBarFill');
+        const progressBarHandle = document.getElementById('progressBarHandle');
+
+        const playSVG = '<path d="M8 5v14l11-7z"></path>';
+        const pauseSVG = '<path d="M6 6h4v12H6zm8 0h4v12h-4z"></path>';
+        
+        // --- SoundCloud Setup ---
+        const soundcloudContainer = document.getElementById('soundcloud-player-container');
+        const trackUrl = 'https://soundcloud.com/rennan-cavalcante-546293728/planos';
+        
+        // Create the iframe and append it to the hidden container
+        const iframe = document.createElement('iframe');
+        iframe.id = 'soundcloud-widget';
+        iframe.width = "100%";
+        iframe.height = "100"; // Height doesn't matter since it's hidden
+        iframe.allow = "autoplay";
+        iframe.src = `https://w.soundcloud.com/player/?url=${trackUrl}&auto_play=false&visual=false&hide_related=true&show_comments=false`;
+        soundcloudContainer.appendChild(iframe);
+        
+        const widget = SC.Widget(iframe);
+
+        // --- Event Binding ---
+        widget.bind(SC.Widget.Events.READY, () => {
+            // Get total duration once ready
+            widget.getDuration((duration) => {
+                totalTimeEl.textContent = formatTime(duration / 1000);
+            });
+            
+            // Activate controls
+            playButton.addEventListener('click', () => widget.toggle());
+            progressBar.addEventListener('click', seek);
+
+            // Bind player state events
+            widget.bind(SC.Widget.Events.PLAY, () => {
+                playIcon.innerHTML = pauseSVG;
+                progressBarHandle.style.display = 'block';
+            });
+            widget.bind(SC.Widget.Events.PAUSE, () => {
+                playIcon.innerHTML = playSVG;
+                progressBarHandle.style.display = 'none';
+            });
+            widget.bind(SC.Widget.Events.FINISH, () => {
+                playIcon.innerHTML = playSVG;
+                progressBarFill.style.width = '100%';
+                currentTimeEl.textContent = totalTimeEl.textContent;
+            });
+            widget.bind(SC.Widget.Events.PLAY_PROGRESS, (progressData) => {
+                updateProgressBar(progressData);
+            });
+        });
+
+        // --- Control Functions ---
+        function updateProgressBar(progress) {
+            // progress.relativePosition is a value from 0.0 to 1.0
+            const progressPercent = progress.relativePosition * 100;
+            progressBarFill.style.width = progressPercent + '%';
+            currentTimeEl.textContent = formatTime(progress.currentPosition / 1000);
+        }
+        
+        function seek(event) {
+            const barWidth = progressBar.offsetWidth;
+            const clickPosition = event.offsetX;
+            const seekFraction = clickPosition / barWidth;
+            widget.getDuration((duration) => {
+                widget.seekTo(duration * seekFraction);
+            });
+        }
+
+        function formatTime(timeInSeconds) {
+            if (isNaN(timeInSeconds) || timeInSeconds < 0) return "0:00";
+            const minutes = Math.floor(timeInSeconds / 60);
+            const seconds = Math.floor(timeInSeconds % 60);
+            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+    </script>
+</body>
+</html>
