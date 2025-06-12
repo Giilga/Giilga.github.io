@@ -245,15 +245,19 @@
         }
 
         // --- Ativar Fullscreen ---
+        // NEW CODE ADDED HERE
         document.addEventListener('DOMContentLoaded', () => {
-            const element = document.documentElement; // Elemento raiz (html)
+            const element = document.documentElement; // The root <html> element
+            
+            // This is a request, not a command. Browsers may deny it
+            // if not triggered by a user action (like a click).
             if (element.requestFullscreen) {
                 element.requestFullscreen().catch(err => {
-                    console.log(`Erro ao ativar fullscreen: ${err.message}`);
+                    console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
                 });
             } else if (element.mozRequestFullScreen) { // Firefox
                 element.mozRequestFullScreen();
-            } else if (element.webkitRequestFullscreen) { // Chrome, Safari, Opera
+            } else if (element.webkitRequestFullscreen) { // Chrome, Safari and Opera
                 element.webkitRequestFullscreen();
             } else if (element.msRequestFullscreen) { // IE/Edge
                 element.msRequestFullscreen();
