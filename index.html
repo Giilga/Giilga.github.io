@@ -3088,11 +3088,10 @@ goAnamneseStep(1);
 </script>
 </body>
   <script>
+// ===================== FUNÇÃO IA CORRIGIDA =====================
 async function generatePlanWithAI() {
   const btn = document.getElementById('btn-generate-ai');
   const output = document.getElementById('ai-plan-output');
-  
-  // Pega a chave que você colou no campo de senha nas configurações
   const apiKeyInput = document.getElementById('api-key-input');
   const apiKey = apiKeyInput ? apiKeyInput.value.trim() : "";
 
@@ -3103,16 +3102,14 @@ async function generatePlanWithAI() {
   }
 
   btn.disabled = true;
-  output.innerHTML = '<div class="ai-loading"><div class="spinner"></div> Gerando seu plano personalizado...</div>';
+  output.innerHTML = '<div class="ai-loading">⌛ Gerando plano personalizado...</div>';
 
-  // Usa as variáveis que já existem no seu sistema (userSettings)
-  const promptText = `Aja como um nutricionista. Gere um plano alimentar para:
+  const promptText = `Aja como um nutricionista. Gere um plano alimentar detalhado para:
     Objetivo: ${userSettings.goal}
     Peso: ${userSettings.weight}kg, Altura: ${userSettings.height}cm, Idade: ${userSettings.age}
     Atividade: ${userSettings.activity}
-    Gere 6 refeições detalhadas. Responda em Português de forma clara.`;
+    Gere 6 refeições. Responda em Português de forma clara.`;
 
-  // URL Direta para o Google Gemini
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
   try {
@@ -3125,29 +3122,24 @@ async function generatePlanWithAI() {
     });
 
     const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error?.message || "Erro na API");
-    }
+    if (!response.ok) throw new Error(data.error?.message || "Erro na API");
 
     const aiText = data.candidates[0].content.parts[0].text;
-    output.innerHTML = `<div style="white-space: pre-wrap;">${aiText}</div>`;
+    output.innerHTML = `<div style="white-space: pre-wrap; line-height: 1.6; color: var(--text);">${aiText}</div>`;
     
   } catch (err) {
-    console.error(err);
-    output.innerHTML = `<div style="color:var(--red); padding:10px;">Erro: ${err.message}</div>`;
+    output.innerHTML = `<div style="color:var(--red); padding:15px; border:1px solid var(--red); border-radius:8px;">Erro: ${err.message}</div>`;
   } finally {
-    btn.disabled = false;}
+    btn.disabled = false;
+  }
 }
+
+// Inicialização final do sistema
+if (typeof initMobile === 'function') initMobile();
 </script>
 
-<script>
-// Garante que o sistema de abas e modal funcione
-function goSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
+</body>
+</html>
 </script>
 
 </body>
