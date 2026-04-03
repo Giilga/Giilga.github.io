@@ -3137,8 +3137,18 @@ async function generatePlanWithAI() {
     console.error(err);
     output.innerHTML = `<div style="color:var(--red); padding:10px;">Erro: ${err.message}</div>`;
   } finally {
-    btn.disabled = false;
-  }
+    btn.disabled = false;}
 }
 </script>
+
+<script>
+// Garante que o sistema de abas e modal funcione
+function goSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+
+</body>
 </html>
