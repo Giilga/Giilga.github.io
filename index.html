@@ -3087,4 +3087,58 @@ renderFoodDB();
 goAnamneseStep(1);
 </script>
 </body>
+  <script>
+async function generatePlanWithAI() {
+  const btn = document.getElementById('btn-generate-ai');
+  const output = document.getElementById('ai-plan-output');
+  
+  // Pega a chave que você colou no campo de senha nas configurações
+  const apiKeyInput = document.getElementById('api-key-input');
+  const apiKey = apiKeyInput ? apiKeyInput.value.trim() : "";
+
+  if (!apiKey) {
+    alert("Por favor, insira sua Chave API do Gemini nas configurações do perfil.");
+    if (typeof goSection === 'function') goSection('perfil');
+    return;
+  }
+
+  btn.disabled = true;
+  output.innerHTML = '<div class="ai-loading"><div class="spinner"></div> Gerando seu plano personalizado...</div>';
+
+  // Usa as variáveis que já existem no seu sistema (userSettings)
+  const promptText = `Aja como um nutricionista. Gere um plano alimentar para:
+    Objetivo: ${userSettings.goal}
+    Peso: ${userSettings.weight}kg, Altura: ${userSettings.height}cm, Idade: ${userSettings.age}
+    Atividade: ${userSettings.activity}
+    Gere 6 refeições detalhadas. Responda em Português de forma clara.`;
+
+  // URL Direta para o Google Gemini
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: promptText }] }]
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error?.message || "Erro na API");
+    }
+
+    const aiText = data.candidates[0].content.parts[0].text;
+    output.innerHTML = `<div style="white-space: pre-wrap;">${aiText}</div>`;
+    
+  } catch (err) {
+    console.error(err);
+    output.innerHTML = `<div style="color:var(--red); padding:10px;">Erro: ${err.message}</div>`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+</script>
 </html>
