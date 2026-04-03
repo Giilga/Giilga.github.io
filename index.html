@@ -3081,14 +3081,7 @@ document.querySelectorAll('.modal-bg').forEach(m => m.addEventListener('click', 
 })();
 
 // ===================== INIT =====================
-// Do not auto-calculate on load — user fills anamnese first
-renderFoodDB();
-// Initialize progress dots
-goAnamneseStep(1);
-</script>
-</body>
-  <script>
-// ===================== FUNÇÃO IA CORRIGIDA =====================
+  // ===================== IA & SISTEMA =====================
 async function generatePlanWithAI() {
   const btn = document.getElementById('btn-generate-ai');
   const output = document.getElementById('ai-plan-output');
@@ -3097,7 +3090,7 @@ async function generatePlanWithAI() {
 
   if (!apiKey) {
     alert("Por favor, insira sua Chave API do Gemini nas configurações do perfil.");
-    if (typeof goSection === 'function') goSection('perfil');
+    goSection('perfil');
     return;
   }
 
@@ -3108,7 +3101,7 @@ async function generatePlanWithAI() {
     Objetivo: ${userSettings.goal}
     Peso: ${userSettings.weight}kg, Altura: ${userSettings.height}cm, Idade: ${userSettings.age}
     Atividade: ${userSettings.activity}
-    Gere 6 refeições. Responda em Português de forma clara.`;
+    Gere 6 refeições detalhadas. Responda em Português de forma clara.`;
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
@@ -3125,7 +3118,7 @@ async function generatePlanWithAI() {
     if (!response.ok) throw new Error(data.error?.message || "Erro na API");
 
     const aiText = data.candidates[0].content.parts[0].text;
-    output.innerHTML = `<div style="white-space: pre-wrap; line-height: 1.6; color: var(--text);">${aiText}</div>`;
+    output.innerHTML = `<div style="white-space: pre-wrap; line-height: 1.6; color: var(--text); padding: 15px;">${aiText}</div>`;
     
   } catch (err) {
     output.innerHTML = `<div style="color:var(--red); padding:15px; border:1px solid var(--red); border-radius:8px;">Erro: ${err.message}</div>`;
@@ -3134,12 +3127,8 @@ async function generatePlanWithAI() {
   }
 }
 
-// Inicialização final do sistema
-if (typeof initMobile === 'function') initMobile();
-</script>
-
-</body>
-</html>
+// Inicialização final
+initMobile();
 </script>
 
 </body>
