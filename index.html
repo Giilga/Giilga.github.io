@@ -3085,14 +3085,9 @@ document.querySelectorAll('.modal-bg').forEach(m => m.addEventListener('click', 
 async function generatePlanWithAI() {
   const btn = document.getElementById('btn-generate-ai');
   const output = document.getElementById('ai-plan-output');
-  const apiKeyInput = document.getElementById('api-key-input');
-  const apiKey = apiKeyInput ? apiKeyInput.value.trim() : "";
-
-  if (!apiKey) {
-    alert("Por favor, insira sua Chave API do Gemini nas configurações do perfil.");
-    goSection('perfil');
-    return;
-  }
+  
+  // COLOQUE SUA CHAVE DENTRO DAS ASPAS ABAIXO
+  const apiKey = "AIzaSyAlyHEu8256K6EsMskHGIYvHeGnfz3tbNU"; 
 
   btn.disabled = true;
   output.innerHTML = '<div class="ai-loading">⌛ Gerando plano personalizado...</div>';
