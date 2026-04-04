@@ -1626,66 +1626,36 @@ let aiPlanoGerado = null; // Plano estruturado em JSON
 // Obtenha sua chave gratuita em: https://ai.google.dev/
 const GEMINI_KEY = 'AIzaSyAlyHEu8256K6EsMskHGIYvHeGnfz3tbNU';
 
-// ===================== FUNÇÃO GEMINI CORRIGIDA =====================
-async function chamarGemini(prompt) {
-  if (GEMINI_KEY.includes('Demo_Substitua') || GEMINI_KEY.length < 30) {
-    throw new Error('CHAVE_NAO_CONFIGURADA');
-  }
+// ===================== CLOUDFLARE WORKER PROXY =====================
+// Cole aqui a URL do seu Worker após publicar (veja gemini-worker.js)
+const WORKER_URL = 'https://nutriplan.gillgamesh53.workers.dev';
 
-  const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
+async function chamarGemini(prompt) {
+  if (!WORKER_URL || WORKER_URL.includes('COLE_AQUI')) {
+    throw new Error('WORKER_NAO_CONFIGURADO');
+  }
 
   const body = JSON.stringify({
     contents: [{ parts: [{ text: prompt }] }],
     generationConfig: { temperature: 0.7, maxOutputTokens: 3000 }
   });
 
-  const parseResposta = (data) => {
-    if (data.error) throw new Error(data.error.message || 'Erro na Gemini API');
-    const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    if (!raw) throw new Error('Resposta vazia da IA');
-    return raw.replace(/```json|```/g, '').trim();
-  };
+  const resp = await fetch(WORKER_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body
+  });
 
-  // Tentativa 1: Chamada direta
-  try {
-    const resp = await fetch(geminiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body
-    });
-    if (resp.ok) {
-      const data = await resp.json();
-      return parseResposta(data);
-    }
-  } catch (e) {
-    console.warn('Direct fetch falhou:', e.message);
+  if (!resp.ok) {
+    throw new Error(`Worker retornou erro HTTP ${resp.status}`);
   }
 
-  // Tentativa 2: Proxies alternativos
-  const proxies = [
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(geminiUrl)}`,
-    `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(geminiUrl)}`,
-    `https://thingproxy.freeboard.io/fetch/${geminiUrl}`,
-    `https://corsproxy.io/?${encodeURIComponent(geminiUrl)}`
-  ];
+  const data = await resp.json();
 
-  for (const proxy of proxies) {
-    try {
-      const resp = await fetch(proxy, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body
-      });
-      if (resp.ok) {
-        const data = await resp.json();
-        return parseResposta(data);
-      }
-    } catch (e) {
-      console.warn(`Proxy falhou: ${proxy}`);
-    }
-  }
-
-  throw new Error('Não foi possível conectar com a IA. Tente novamente em alguns segundos.');
+  if (data.error) throw new Error(data.error.message || 'Erro na Gemini API');
+  const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  if (!raw) throw new Error('Resposta vazia da IA');
+  return raw.replace(/```json|```/g, '').trim();
 }
 async function gerarDietaIA() {
   if(!perfilCalc) { calcularPerfil(); }
@@ -1762,18 +1732,20 @@ Use alimentos comuns e acessíveis no Brasil com quantidades realistas. Prefira 
     const raw = await chamarGemini(prompt);
     planoJSON = JSON.parse(raw);
   } catch(e) {
-    if (e.message === 'CHAVE_NAO_CONFIGURADA') {
+    if (e.message === 'WORKER_NAO_CONFIGURADO' || e.message === 'CHAVE_NAO_CONFIGURADA') {
       out.innerHTML = `
-        <div style="color:var(--amber);font-size:13px;line-height:1.8;">
-          ⚠️ <strong>Configure sua chave Gemini gratuita</strong><br>
-          1. Acesse <a href="https://ai.google.dev/" target="_blank" style="color:var(--accent)">ai.google.dev</a> e clique em "Get API key"<br>
-          2. Crie uma chave gratuita (sem cartão de crédito)<br>
-          3. No código do app, substitua <code style="color:var(--accent)">GEMINI_KEY</code> pela sua chave<br>
+        <div style="color:var(--amber);font-size:13px;line-height:2;">
+          ⚠️ <strong>Configure o Cloudflare Worker</strong><br>
+          1. Acesse <a href="https://workers.cloudflare.com" target="_blank" style="color:var(--accent)">workers.cloudflare.com</a> → crie conta gratuita<br>
+          2. Clique em <strong>"Create a Worker"</strong><br>
+          3. Cole o conteúdo do arquivo <code style="color:var(--accent)">gemini-worker.js</code><br>
+          4. Clique em <strong>"Save and Deploy"</strong><br>
+          5. Copie a URL gerada e cole no <code style="color:var(--accent)">WORKER_URL</code> do index.html<br>
           <br>
-          <span style="color:var(--text3);font-size:11px;">Limite gratuito: 1.500 planos/dia · Modelo: Gemini 1.5 Flash</span>
+          <span style="color:var(--text3);font-size:11px;">Gratuito · 100.000 req/dia · Sem cartão de crédito</span>
         </div>`;
     } else {
-      out.innerHTML = `<span style="color:var(--red)">❌ Erro ao gerar plano: ${e.message}. Verifique sua chave Gemini e tente novamente.</span>`;
+      out.innerHTML = `<span style="color:var(--red)">❌ Erro: ${e.message}</span>`;
     }
     progressLabel.textContent = '';
     return;
