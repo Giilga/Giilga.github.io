@@ -1062,7 +1062,7 @@
       <div class="header">
         <div>
           <div class="page-title">Banco de Alimentos</div>
-          <div class="page-sub">Base local + busca em tempo real via TACO/UNICAMP · Open Food Facts BR · USDA</div>
+          <div class="page-sub">Base local + busca em tempo real via TACO/UNICAMP · Open Food Facts BR</div>
         </div>
         <button class="btn btn-primary btn-sm" onclick="openModalAlimento()">+ Adicionar manual</button>
       </div>
@@ -1070,7 +1070,7 @@
         <!-- API SEARCH BOX -->
         <div class="card" style="margin-bottom:16px;">
           <div class="card-title">🔍 Buscar na base global de alimentos</div>
-          <div style="font-size:12px;color:var(--text3);margin-bottom:12px;">Pesquise qualquer alimento — prioridade para a Tabela TACO/UNICAMP 🇧🇷, depois Open Food Facts Brasil e USDA como complemento.</div>
+          <div style="font-size:12px;color:var(--text3);margin-bottom:12px;">Pesquise qualquer alimento — prioridade para a Tabela TACO/UNICAMP 🇧🇷, depois Open Food Facts Brasil.</div>
           <div style="display:flex;gap:10px;align-items:center;">
             <input type="text" id="api-search-input" placeholder="Ex: whey protein, arroz integral, frango..." style="flex:1;" onkeydown="if(event.key==='Enter')buscarAlimentoAPI()" />
             <button class="btn btn-primary" onclick="buscarAlimentoAPI()" id="btn-api-search">
@@ -1476,67 +1476,193 @@ function getPreferencias() {
 }
 
 const FOODS_DB = [
-  {id:1,nome:"Frango grelhado",cat:"proteina",kcal:165,prot:31,carb:0,fat:3.6,fib:0,unit:"g"},
-  {id:2,nome:"Arroz branco cozido",cat:"carbo",kcal:130,prot:2.7,carb:28.2,fat:0.3,fib:0.4,unit:"g"},
-  {id:3,nome:"Feijão cozido",cat:"carbo",kcal:77,prot:5,carb:13.6,fat:0.5,fib:6,unit:"g"},
-  {id:4,nome:"Ovo inteiro",cat:"proteina",kcal:155,prot:13,carb:1.1,fat:11,fib:0,unit:"unid"},
-  {id:5,nome:"Pão de forma",cat:"carbo",kcal:265,prot:9,carb:49,fat:3.5,fib:2.4,unit:"g"},
-  {id:6,nome:"Manteiga",cat:"gordura",kcal:717,prot:0.9,carb:0.1,fat:81,fib:0,unit:"g"},
-  {id:7,nome:"Iogurte grego",cat:"laticinios",kcal:97,prot:9,carb:3.6,fat:5,fib:0,unit:"ml"},
-  {id:8,nome:"Morango",cat:"vegetal",kcal:32,prot:0.7,carb:7.7,fat:0.3,fib:2,unit:"g"},
-  {id:9,nome:"Leite em pó integral",cat:"laticinios",kcal:496,prot:26,carb:38,fat:27,fib:0,unit:"g"},
-  {id:10,nome:"Aveia em flocos",cat:"carbo",kcal:389,prot:17,carb:66,fat:7,fib:10,unit:"g"},
-  {id:11,nome:"Banana",cat:"vegetal",kcal:89,prot:1.1,carb:23,fat:0.3,fib:2.6,unit:"g"},
-  {id:12,nome:"Batata doce",cat:"carbo",kcal:86,prot:1.6,carb:20,fat:0.1,fib:3,unit:"g"},
-  {id:13,nome:"Salmão",cat:"proteina",kcal:208,prot:20,carb:0,fat:13,fib:0,unit:"g"},
-  {id:14,nome:"Atum em lata (água)",cat:"proteina",kcal:116,prot:26,carb:0,fat:1,fib:0,unit:"g"},
-  {id:15,nome:"Carne bovina (patinho)",cat:"proteina",kcal:219,prot:28,carb:0,fat:11,fib:0,unit:"g"},
-  {id:16,nome:"Queijo cottage",cat:"laticinios",kcal:98,prot:11,carb:3.4,fat:4.3,fib:0,unit:"g"},
-  {id:17,nome:"Whey protein",cat:"proteina",kcal:120,prot:24,carb:3,fat:2,fib:0,unit:"g"},
-  {id:18,nome:"Azeite de oliva",cat:"gordura",kcal:884,prot:0,carb:0,fat:100,fib:0,unit:"ml"},
-  {id:19,nome:"Amendoim",cat:"gordura",kcal:567,prot:26,carb:16,fat:49,fib:8.5,unit:"g"},
-  {id:20,nome:"Castanha-do-pará",cat:"gordura",kcal:659,prot:14,carb:12,fat:67,fib:7.5,unit:"g"},
-  {id:21,nome:"Maçã",cat:"vegetal",kcal:52,prot:0.3,carb:14,fat:0.2,fib:2.4,unit:"g"},
-  {id:22,nome:"Laranja",cat:"vegetal",kcal:47,prot:0.9,carb:12,fat:0.1,fib:2.4,unit:"g"},
-  {id:23,nome:"Brócolis cozido",cat:"vegetal",kcal:35,prot:2.4,carb:7,fat:0.4,fib:3.3,unit:"g"},
-  {id:24,nome:"Cenoura",cat:"vegetal",kcal:41,prot:0.9,carb:10,fat:0.2,fib:2.8,unit:"g"},
-  {id:25,nome:"Espinafre",cat:"vegetal",kcal:23,prot:2.9,carb:3.6,fat:0.4,fib:2.2,unit:"g"},
-  {id:26,nome:"Leite integral",cat:"laticinios",kcal:61,prot:3.2,carb:4.8,fat:3.3,fib:0,unit:"ml"},
-  {id:27,nome:"Pão integral",cat:"carbo",kcal:247,prot:13,carb:41,fat:4.2,fib:7,unit:"g"},
-  {id:28,nome:"Massa cozida",cat:"carbo",kcal:131,prot:5,carb:25,fat:1.1,fib:1.8,unit:"g"},
-  {id:29,nome:"Quinoa cozida",cat:"carbo",kcal:120,prot:4.4,carb:21.3,fat:1.9,fib:2.8,unit:"g"},
-  {id:30,nome:"Ovo clara",cat:"proteina",kcal:52,prot:11,carb:0.7,fat:0.2,fib:0,unit:"g"},
-  // Alimentos brasileiros — Fonte: TACO/UNICAMP
-  {id:31,nome:"Tapioca (goma, crua)",cat:"carbo",kcal:344,prot:0.2,carb:85.6,fat:0.2,fib:0,unit:"g"},
-  {id:32,nome:"Feijão-preto cozido",cat:"carbo",kcal:77,prot:4.5,carb:14,fat:0.5,fib:8.4,unit:"g"},
-  {id:33,nome:"Lentilha cozida",cat:"carbo",kcal:93,prot:6.3,carb:16.3,fat:0.4,fib:3.7,unit:"g"},
-  {id:34,nome:"Grão-de-bico cozido",cat:"carbo",kcal:164,prot:8.9,carb:27.4,fat:2.6,fib:7.6,unit:"g"},
-  {id:35,nome:"Mandioca cozida",cat:"carbo",kcal:125,prot:0.6,carb:30,fat:0.3,fib:1.4,unit:"g"},
-  {id:36,nome:"Batata-doce cozida",cat:"carbo",kcal:77,prot:1.2,carb:18.4,fat:0.1,fib:2.4,unit:"g"},
-  {id:37,nome:"Cará cozido",cat:"carbo",kcal:94,prot:1.8,carb:22.1,fat:0.1,fib:1,unit:"g"},
-  {id:38,nome:"Inhame cozido",cat:"carbo",kcal:94,prot:1.4,carb:22.4,fat:0.1,fib:1.2,unit:"g"},
-  {id:39,nome:"Milho verde cozido",cat:"carbo",kcal:86,prot:3.2,carb:18.7,fat:1,fib:2,unit:"g"},
-  {id:40,nome:"Farinha de mandioca torrada",cat:"carbo",kcal:361,prot:1.4,carb:87.9,fat:0.3,fib:6.5,unit:"g"},
-  {id:41,nome:"Tilápia grelhada",cat:"proteina",kcal:128,prot:26,carb:0,fat:2.6,fib:0,unit:"g"},
-  {id:42,nome:"Sardinha em conserva",cat:"proteina",kcal:208,prot:24.7,carb:0,fat:11.5,fib:0,unit:"g"},
-  {id:43,nome:"Carne bovina (acém cozido)",cat:"proteina",kcal:235,prot:28.5,carb:0,fat:13,fib:0,unit:"g"},
-  {id:44,nome:"Carne suína (lombo assado)",cat:"proteina",kcal:233,prot:26.6,carb:0,fat:14,fib:0,unit:"g"},
-  {id:45,nome:"Peito de peru assado",cat:"proteina",kcal:159,prot:28.6,carb:0,fat:4.4,fib:0,unit:"g"},
-  {id:46,nome:"Requeijão cremoso",cat:"laticinios",kcal:257,prot:8.5,carb:3.3,fat:23.7,fib:0,unit:"g"},
-  {id:47,nome:"Coalhada seca",cat:"laticinios",kcal:95,prot:13.8,carb:4.5,fat:2.5,fib:0,unit:"g"},
-  {id:48,nome:"Queijo minas frescal",cat:"laticinios",kcal:264,prot:17.4,carb:3,fat:20.2,fib:0,unit:"g"},
-  {id:49,nome:"Açaí (polpa, sem açúcar)",cat:"vegetal",kcal:58,prot:1.5,carb:6.7,fat:5.1,fib:2.6,unit:"g"},
-  {id:50,nome:"Mamão papaia",cat:"vegetal",kcal:40,prot:0.5,carb:10.4,fat:0.1,fib:1.8,unit:"g"},
-  {id:51,nome:"Manga (haden)",cat:"vegetal",kcal:64,prot:0.6,carb:16.9,fat:0.3,fib:1.5,unit:"g"},
-  {id:52,nome:"Abacate",cat:"gordura",kcal:96,prot:1.2,carb:6,fat:8.4,fib:6.3,unit:"g"},
-  {id:53,nome:"Goiaba",cat:"vegetal",kcal:54,prot:2.6,carb:13.5,fat:1,fib:6.2,unit:"g"},
-  {id:54,nome:"Caju",cat:"vegetal",kcal:43,prot:0.9,carb:11.3,fat:0.3,fib:1.7,unit:"g"},
-  {id:55,nome:"Couve-manteiga refogada",cat:"vegetal",kcal:56,prot:3.7,carb:7.5,fat:1.3,fib:3.5,unit:"g"},
-  {id:56,nome:"Quiabo cozido",cat:"vegetal",kcal:26,prot:2.1,carb:5.4,fat:0.2,fib:3.2,unit:"g"},
-  {id:57,nome:"Jiló cozido",cat:"vegetal",kcal:30,prot:1.5,carb:6.4,fat:0.3,fib:2.4,unit:"g"},
-  {id:58,nome:"Cebola crua",cat:"vegetal",kcal:36,prot:1.2,carb:8.6,fat:0.1,fib:1.5,unit:"g"},
-  {id:59,nome:"Alho cru",cat:"vegetal",kcal:149,prot:6.4,carb:33.1,fat:0.5,fib:2.1,unit:"g"},
-  {id:60,nome:"Amendoim torrado sem sal",cat:"gordura",kcal:592,prot:26.2,carb:20.7,fat:48.9,fib:8.7,unit:"g"},
+// CEREAIS E DERIVADOS
+  {id:101,nome:"Arroz, agulhinha, cozido",cat:"carbo",kcal:128,prot:2.5,carb:28.1,fat:0.2,fib:1.6,unit:"g",fonte:"TACO"},
+  {id:102,nome:"Arroz, integral, cozido",cat:"carbo",kcal:124,prot:2.6,carb:25.8,fat:1.0,fib:2.7,unit:"g",fonte:"TACO"},
+  {id:103,nome:"Arroz, parboilizado, cozido",cat:"carbo",kcal:127,prot:2.7,carb:27.5,fat:0.3,fib:1.4,unit:"g",fonte:"TACO"},
+  {id:104,nome:"Aveia, flocos",cat:"carbo",kcal:394,prot:13.9,carb:66.6,fat:8.5,fib:9.1,unit:"g",fonte:"TACO"},
+  {id:105,nome:"Biscoito, agua e sal",cat:"carbo",kcal:430,prot:9.0,carb:69.0,fat:13.0,fib:2.1,unit:"g",fonte:"TACO"},
+  {id:106,nome:"Biscoito, maisena",cat:"carbo",kcal:430,prot:6.5,carb:74.0,fat:11.5,fib:1.2,unit:"g",fonte:"TACO"},
+  {id:107,nome:"Canjica, branca, cozida",cat:"carbo",kcal:100,prot:2.2,carb:21.8,fat:0.5,fib:1.4,unit:"g",fonte:"TACO"},
+  {id:108,nome:"Coxinha da asa, frango, grelhada",cat:"proteina",kcal:220,prot:28.0,carb:0.0,fat:12.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:109,nome:"Fubá",cat:"carbo",kcal:351,prot:7.7,carb:74.1,fat:1.4,fib:3.2,unit:"g",fonte:"TACO"},
+  {id:110,nome:"Macarrão, cozido",cat:"carbo",kcal:136,prot:4.8,carb:28.0,fat:0.5,fib:1.6,unit:"g",fonte:"TACO"},
+  {id:111,nome:"Pão de queijo",cat:"carbo",kcal:300,prot:5.5,carb:42.0,fat:12.0,fib:0.8,unit:"g",fonte:"TACO"},
+  {id:112,nome:"Pão francês",cat:"carbo",kcal:300,prot:8.0,carb:58.6,fat:2.4,fib:2.3,unit:"g",fonte:"TACO"},
+  {id:113,nome:"Pão integral",cat:"carbo",kcal:253,prot:8.8,carb:44.0,fat:4.9,fib:4.9,unit:"g",fonte:"TACO"},
+  {id:114,nome:"Tapioca, goma, crua",cat:"carbo",kcal:344,prot:0.2,carb:85.6,fat:0.2,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:115,nome:"Farinha de mandioca, torrada",cat:"carbo",kcal:361,prot:1.4,carb:87.9,fat:0.3,fib:6.5,unit:"g",fonte:"TACO"},
+  {id:116,nome:"Farinha de trigo, integral",cat:"carbo",kcal:333,prot:13.0,carb:61.8,fat:2.7,fib:11.2,unit:"g",fonte:"TACO"},
+  {id:117,nome:"Farinha de trigo, refinada",cat:"carbo",kcal:360,prot:9.8,carb:75.1,fat:1.4,fib:2.3,unit:"g",fonte:"TACO"},
+  {id:118,nome:"Milho verde, cozido",cat:"carbo",kcal:86,prot:3.2,carb:18.7,fat:1.0,fib:2.0,unit:"g",fonte:"TACO"},
+  {id:119,nome:"Polenta, cozida",cat:"carbo",kcal:70,prot:1.6,carb:15.2,fat:0.3,fib:0.7,unit:"g",fonte:"TACO"},
+  {id:120,nome:"Granola",cat:"carbo",kcal:394,prot:9.0,carb:59.7,fat:13.7,fib:6.5,unit:"g",fonte:"TACO"},
+
+  // VERDURAS E HORTALIÇAS
+  {id:201,nome:"Abóbora, moranga, crua",cat:"vegetal",kcal:26,prot:1.0,carb:5.7,fat:0.1,fib:0.5,unit:"g",fonte:"TACO"},
+  {id:202,nome:"Abóbora, cozida",cat:"vegetal",kcal:18,prot:0.6,carb:4.0,fat:0.1,fib:1.0,unit:"g",fonte:"TACO"},
+  {id:203,nome:"Abobrinha, crua",cat:"vegetal",kcal:15,prot:1.0,carb:2.5,fat:0.1,fib:1.1,unit:"g",fonte:"TACO"},
+  {id:204,nome:"Alface, crua",cat:"vegetal",kcal:11,prot:1.3,carb:1.7,fat:0.2,fib:1.5,unit:"g",fonte:"TACO"},
+  {id:205,nome:"Almeirão, cru",cat:"vegetal",kcal:29,prot:2.5,carb:4.5,fat:0.4,fib:3.4,unit:"g",fonte:"TACO"},
+  {id:206,nome:"Batata, cozida",cat:"carbo",kcal:52,prot:1.2,carb:11.5,fat:0.1,fib:1.5,unit:"g",fonte:"TACO"},
+  {id:207,nome:"Batata-doce, cozida",cat:"carbo",kcal:77,prot:1.2,carb:18.4,fat:0.1,fib:2.4,unit:"g",fonte:"TACO"},
+  {id:208,nome:"Beterraba, crua",cat:"vegetal",kcal:35,prot:1.7,carb:7.3,fat:0.1,fib:2.0,unit:"g",fonte:"TACO"},
+  {id:209,nome:"Brócolis, cozido",cat:"vegetal",kcal:35,prot:3.7,carb:5.4,fat:0.5,fib:3.4,unit:"g",fonte:"TACO"},
+  {id:210,nome:"Cará, cozido",cat:"carbo",kcal:94,prot:1.8,carb:22.1,fat:0.1,fib:1.0,unit:"g",fonte:"TACO"},
+  {id:211,nome:"Cenoura, crua",cat:"vegetal",kcal:34,prot:1.3,carb:7.7,fat:0.2,fib:3.2,unit:"g",fonte:"TACO"},
+  {id:212,nome:"Chuchu, cozido",cat:"vegetal",kcal:18,prot:0.7,carb:3.9,fat:0.1,fib:1.3,unit:"g",fonte:"TACO"},
+  {id:213,nome:"Couve, refogada",cat:"vegetal",kcal:56,prot:3.7,carb:7.5,fat:1.3,fib:3.5,unit:"g",fonte:"TACO"},
+  {id:214,nome:"Couve-flor, cozida",cat:"vegetal",kcal:21,prot:1.8,carb:3.8,fat:0.2,fib:2.4,unit:"g",fonte:"TACO"},
+  {id:215,nome:"Espinafre, refogado",cat:"vegetal",kcal:29,prot:3.0,carb:3.5,fat:0.7,fib:2.5,unit:"g",fonte:"TACO"},
+  {id:216,nome:"Inhame, cozido",cat:"carbo",kcal:94,prot:1.4,carb:22.4,fat:0.1,fib:1.2,unit:"g",fonte:"TACO"},
+  {id:217,nome:"Jiló, cozido",cat:"vegetal",kcal:30,prot:1.5,carb:6.4,fat:0.3,fib:2.4,unit:"g",fonte:"TACO"},
+  {id:218,nome:"Mandioca, cozida",cat:"carbo",kcal:125,prot:0.6,carb:30.1,fat:0.3,fib:1.4,unit:"g",fonte:"TACO"},
+  {id:219,nome:"Pepino, cru",cat:"vegetal",kcal:10,prot:0.7,carb:2.0,fat:0.1,fib:0.7,unit:"g",fonte:"TACO"},
+  {id:220,nome:"Pimentão, verde, cru",cat:"vegetal",kcal:20,prot:0.9,carb:4.2,fat:0.2,fib:1.4,unit:"g",fonte:"TACO"},
+  {id:221,nome:"Quiabo, cozido",cat:"vegetal",kcal:26,prot:2.1,carb:5.4,fat:0.2,fib:3.2,unit:"g",fonte:"TACO"},
+  {id:222,nome:"Repolho, cru",cat:"vegetal",kcal:15,prot:1.4,carb:2.5,fat:0.1,fib:1.9,unit:"g",fonte:"TACO"},
+  {id:223,nome:"Tomate, cru",cat:"vegetal",kcal:15,prot:1.1,carb:2.9,fat:0.2,fib:1.2,unit:"g",fonte:"TACO"},
+  {id:224,nome:"Vagem, cozida",cat:"vegetal",kcal:22,prot:1.3,carb:4.2,fat:0.2,fib:2.5,unit:"g",fonte:"TACO"},
+  {id:225,nome:"Cebola, crua",cat:"vegetal",kcal:36,prot:1.2,carb:8.6,fat:0.1,fib:1.5,unit:"g",fonte:"TACO"},
+  {id:226,nome:"Alho, cru",cat:"vegetal",kcal:149,prot:6.4,carb:33.1,fat:0.5,fib:2.1,unit:"g",fonte:"TACO"},
+  {id:227,nome:"Agrião, cru",cat:"vegetal",kcal:19,prot:2.2,carb:2.5,fat:0.2,fib:1.8,unit:"g",fonte:"TACO"},
+  {id:228,nome:"Aipim, ver Mandioca",cat:"carbo",kcal:125,prot:0.6,carb:30.1,fat:0.3,fib:1.4,unit:"g",fonte:"TACO"},
+  {id:229,nome:"Berinjela, crua",cat:"vegetal",kcal:17,prot:0.9,carb:3.5,fat:0.2,fib:2.6,unit:"g",fonte:"TACO"},
+
+  // FRUTAS
+  {id:301,nome:"Abacate",cat:"gordura",kcal:96,prot:1.2,carb:6.0,fat:8.4,fib:6.3,unit:"g",fonte:"TACO"},
+  {id:302,nome:"Abacaxi",cat:"vegetal",kcal:48,prot:0.9,carb:12.3,fat:0.1,fib:1.0,unit:"g",fonte:"TACO"},
+  {id:303,nome:"Açaí, polpa, sem açúcar",cat:"vegetal",kcal:58,prot:1.5,carb:6.7,fat:5.1,fib:2.6,unit:"g",fonte:"TACO"},
+  {id:304,nome:"Banana, nanica",cat:"vegetal",kcal:92,prot:1.4,carb:23.8,fat:0.1,fib:1.9,unit:"g",fonte:"TACO"},
+  {id:305,nome:"Banana, prata",cat:"vegetal",kcal:98,prot:1.3,carb:26.0,fat:0.1,fib:2.0,unit:"g",fonte:"TACO"},
+  {id:306,nome:"Caju",cat:"vegetal",kcal:43,prot:0.9,carb:11.3,fat:0.3,fib:1.7,unit:"g",fonte:"TACO"},
+  {id:307,nome:"Caqui",cat:"vegetal",kcal:71,prot:0.6,carb:18.6,fat:0.3,fib:2.5,unit:"g",fonte:"TACO"},
+  {id:308,nome:"Carambola",cat:"vegetal",kcal:35,prot:0.7,carb:8.9,fat:0.1,fib:3.3,unit:"g",fonte:"TACO"},
+  {id:309,nome:"Coco, fresco",cat:"gordura",kcal:354,prot:3.2,carb:15.2,fat:34.0,fib:5.4,unit:"g",fonte:"TACO"},
+  {id:310,nome:"Goiaba, vermelha",cat:"vegetal",kcal:54,prot:2.6,carb:13.5,fat:1.0,fib:6.2,unit:"g",fonte:"TACO"},
+  {id:311,nome:"Graviola",cat:"vegetal",kcal:62,prot:1.0,carb:15.7,fat:0.3,fib:1.9,unit:"g",fonte:"TACO"},
+  {id:312,nome:"Laranja, bahia",cat:"vegetal",kcal:47,prot:1.0,carb:11.5,fat:0.1,fib:2.0,unit:"g",fonte:"TACO"},
+  {id:313,nome:"Laranja, lima",cat:"vegetal",kcal:43,prot:0.8,carb:10.7,fat:0.1,fib:1.6,unit:"g",fonte:"TACO"},
+  {id:314,nome:"Limão",cat:"vegetal",kcal:32,prot:0.9,carb:8.1,fat:0.3,fib:1.8,unit:"g",fonte:"TACO"},
+  {id:315,nome:"Maçã, fuji",cat:"vegetal",kcal:56,prot:0.3,carb:15.2,fat:0.3,fib:1.4,unit:"g",fonte:"TACO"},
+  {id:316,nome:"Mamão, formosa",cat:"vegetal",kcal:45,prot:0.5,carb:11.8,fat:0.1,fib:1.8,unit:"g",fonte:"TACO"},
+  {id:317,nome:"Mamão, papaia",cat:"vegetal",kcal:40,prot:0.5,carb:10.4,fat:0.1,fib:1.8,unit:"g",fonte:"TACO"},
+  {id:318,nome:"Manga, tommy",cat:"vegetal",kcal:64,prot:0.6,carb:16.9,fat:0.3,fib:1.5,unit:"g",fonte:"TACO"},
+  {id:319,nome:"Maracujá, suco",cat:"vegetal",kcal:64,prot:0.7,carb:16.2,fat:0.1,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:320,nome:"Melancia",cat:"vegetal",kcal:33,prot:1.0,carb:8.1,fat:0.2,fib:0.4,unit:"g",fonte:"TACO"},
+  {id:321,nome:"Melão",cat:"vegetal",kcal:29,prot:0.7,carb:7.2,fat:0.1,fib:0.3,unit:"g",fonte:"TACO"},
+  {id:322,nome:"Morango",cat:"vegetal",kcal:30,prot:0.8,carb:7.1,fat:0.3,fib:1.7,unit:"g",fonte:"TACO"},
+  {id:323,nome:"Pêra",cat:"vegetal",kcal:55,prot:0.6,carb:14.5,fat:0.1,fib:2.2,unit:"g",fonte:"TACO"},
+  {id:324,nome:"Pêssego",cat:"vegetal",kcal:43,prot:0.9,carb:10.7,fat:0.1,fib:1.5,unit:"g",fonte:"TACO"},
+  {id:325,nome:"Uva, itália",cat:"vegetal",kcal:69,prot:0.9,carb:17.9,fat:0.1,fib:0.9,unit:"g",fonte:"TACO"},
+  {id:326,nome:"Tangerina, ponkan",cat:"vegetal",kcal:51,prot:0.8,carb:13.3,fat:0.2,fib:1.4,unit:"g",fonte:"TACO"},
+  {id:327,nome:"Acerola",cat:"vegetal",kcal:33,prot:0.9,carb:7.9,fat:0.2,fib:1.5,unit:"g",fonte:"TACO"},
+  {id:328,nome:"Cupuaçu, polpa",cat:"vegetal",kcal:49,prot:1.4,carb:11.7,fat:0.5,fib:3.1,unit:"g",fonte:"TACO"},
+
+  // LEGUMINOSAS
+  {id:401,nome:"Ervilha, cozida",cat:"carbo",kcal:74,prot:4.7,carb:12.9,fat:0.5,fib:5.7,unit:"g",fonte:"TACO"},
+  {id:402,nome:"Feijão, carioca, cozido",cat:"carbo",kcal:77,prot:4.8,carb:13.6,fat:0.5,fib:8.5,unit:"g",fonte:"TACO"},
+  {id:403,nome:"Feijão, preto, cozido",cat:"carbo",kcal:77,prot:4.5,carb:14.0,fat:0.5,fib:8.4,unit:"g",fonte:"TACO"},
+  {id:404,nome:"Feijão, roxo, cozido",cat:"carbo",kcal:75,prot:4.7,carb:13.5,fat:0.4,fib:6.8,unit:"g",fonte:"TACO"},
+  {id:405,nome:"Grão-de-bico, cozido",cat:"carbo",kcal:164,prot:8.9,carb:27.4,fat:2.6,fib:7.6,unit:"g",fonte:"TACO"},
+  {id:406,nome:"Lentilha, cozida",cat:"carbo",kcal:93,prot:6.3,carb:16.3,fat:0.4,fib:3.7,unit:"g",fonte:"TACO"},
+  {id:407,nome:"Soja, cozida",cat:"proteina",kcal:141,prot:14.0,carb:11.4,fat:5.7,fib:9.5,unit:"g",fonte:"TACO"},
+  {id:408,nome:"Feijão, fava, cozido",cat:"carbo",kcal:55,prot:3.5,carb:10.0,fat:0.3,fib:4.8,unit:"g",fonte:"TACO"},
+  {id:409,nome:"Amendoim, torrado, sem sal",cat:"gordura",kcal:592,prot:26.2,carb:20.7,fat:48.9,fib:8.7,unit:"g",fonte:"TACO"},
+
+  // CARNES E DERIVADOS
+  {id:501,nome:"Acém, bovino, cozido",cat:"proteina",kcal:219,prot:31.9,carb:0.0,fat:10.1,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:502,nome:"Alcatra, bovino, grelhada",cat:"proteina",kcal:219,prot:31.3,carb:0.0,fat:10.4,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:503,nome:"Carne moída, bovino, refogada",cat:"proteina",kcal:215,prot:26.8,carb:0.0,fat:11.7,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:504,nome:"Contrafilé, bovino, grelhado",cat:"proteina",kcal:243,prot:29.1,carb:0.0,fat:13.9,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:505,nome:"Costela, bovino, assada",cat:"proteina",kcal:397,prot:24.0,carb:0.0,fat:33.3,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:506,nome:"Figado, bovino, cozido",cat:"proteina",kcal:153,prot:24.8,carb:2.9,fat:4.2,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:507,nome:"Patinho, bovino, grelhado",cat:"proteina",kcal:219,prot:31.0,carb:0.0,fat:10.4,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:508,nome:"Picanha, bovino, grelhada",cat:"proteina",kcal:280,prot:26.1,carb:0.0,fat:19.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:509,nome:"Filé mignon, bovino, grelhado",cat:"proteina",kcal:211,prot:29.7,carb:0.0,fat:10.1,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:510,nome:"Frango, peito, grelhado",cat:"proteina",kcal:159,prot:32.0,carb:0.0,fat:2.7,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:511,nome:"Frango, coxa, cozida",cat:"proteina",kcal:192,prot:26.6,carb:0.0,fat:9.4,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:512,nome:"Frango, sobrecoxa, cozida",cat:"proteina",kcal:229,prot:25.1,carb:0.0,fat:14.2,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:513,nome:"Frango, asa, grelhada",cat:"proteina",kcal:220,prot:28.0,carb:0.0,fat:12.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:514,nome:"Peru, peito, assado",cat:"proteina",kcal:159,prot:28.6,carb:0.0,fat:4.4,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:515,nome:"Linguiça, suína, grelhada",cat:"proteina",kcal:270,prot:17.0,carb:2.0,fat:21.5,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:516,nome:"Lombo, suíno, assado",cat:"proteina",kcal:233,prot:26.6,carb:0.0,fat:14.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:517,nome:"Presunto, suíno",cat:"proteina",kcal:145,prot:18.5,carb:1.8,fat:7.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:518,nome:"Bacon, suíno, frito",cat:"proteina",kcal:541,prot:14.0,carb:1.5,fat:55.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:519,nome:"Ovo, galinha, inteiro, cozido",cat:"proteina",kcal:146,prot:13.3,carb:0.6,fat:9.8,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:520,nome:"Ovo, galinha, clara, crua",cat:"proteina",kcal:50,prot:10.8,carb:0.8,fat:0.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:521,nome:"Ovo, galinha, gema, crua",cat:"proteina",kcal:358,prot:16.4,carb:1.0,fat:31.6,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:522,nome:"Salsicha, suína, cozida",cat:"proteina",kcal:253,prot:13.0,carb:3.6,fat:21.4,fib:0.0,unit:"g",fonte:"TACO"},
+
+  // PEIXES E FRUTOS DO MAR
+  {id:601,nome:"Atum, em óleo, enlatado",cat:"proteina",kcal:200,prot:25.8,carb:0.0,fat:10.9,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:602,nome:"Atum, em água, enlatado",cat:"proteina",kcal:116,prot:26.1,carb:0.0,fat:0.8,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:603,nome:"Bacalhau, dessalgado, cozido",cat:"proteina",kcal:116,prot:26.0,carb:0.0,fat:0.8,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:604,nome:"Camarão, cozido",cat:"proteina",kcal:90,prot:18.8,carb:0.0,fat:1.5,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:605,nome:"Cação, grelhado",cat:"proteina",kcal:120,prot:25.0,carb:0.0,fat:1.9,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:606,nome:"Merluza, cozida",cat:"proteina",kcal:99,prot:20.9,carb:0.0,fat:1.4,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:607,nome:"Pescada, cozida",cat:"proteina",kcal:108,prot:23.0,carb:0.0,fat:1.6,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:608,nome:"Salmão, grelhado",cat:"proteina",kcal:183,prot:22.5,carb:0.0,fat:10.1,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:609,nome:"Sardinha, em óleo, enlatada",cat:"proteina",kcal:208,prot:24.7,carb:0.0,fat:11.5,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:610,nome:"Tilápia, grelhada",cat:"proteina",kcal:128,prot:26.0,carb:0.0,fat:2.6,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:611,nome:"Frango, peito, cozido",cat:"proteina",kcal:166,prot:31.5,carb:0.0,fat:3.7,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:612,nome:"Tambaqui, assado",cat:"proteina",kcal:205,prot:21.5,carb:0.0,fat:13.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:613,nome:"Surubim, assado",cat:"proteina",kcal:139,prot:24.0,carb:0.0,fat:4.2,fib:0.0,unit:"g",fonte:"TACO"},
+
+  // LATICÍNIOS E DERIVADOS
+  {id:701,nome:"Coalhada seca",cat:"laticinios",kcal:95,prot:13.8,carb:4.5,fat:2.5,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:702,nome:"Iogurte, desnatado",cat:"laticinios",kcal:49,prot:4.9,carb:6.9,fat:0.2,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:703,nome:"Iogurte, integral",cat:"laticinios",kcal:74,prot:3.8,carb:6.0,fat:3.6,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:704,nome:"Leite, desnatado",cat:"laticinios",kcal:35,prot:3.4,carb:5.0,fat:0.2,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:705,nome:"Leite, integral",cat:"laticinios",kcal:61,prot:3.2,carb:4.8,fat:3.3,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:706,nome:"Leite, semidesnatado",cat:"laticinios",kcal:47,prot:3.3,carb:4.9,fat:1.5,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:707,nome:"Manteiga, com sal",cat:"gordura",kcal:726,prot:0.5,carb:0.0,fat:82.4,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:708,nome:"Margarina, com sal",cat:"gordura",kcal:721,prot:0.2,carb:0.0,fat:80.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:709,nome:"Queijo, minas, frescal",cat:"laticinios",kcal:264,prot:17.4,carb:3.0,fat:20.2,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:710,nome:"Queijo, mussarela",cat:"laticinios",kcal:300,prot:22.2,carb:3.2,fat:22.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:711,nome:"Queijo, parmesão",cat:"laticinios",kcal:408,prot:33.8,carb:2.1,fat:29.7,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:712,nome:"Queijo, prato",cat:"laticinios",kcal:358,prot:24.7,carb:2.0,fat:27.9,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:713,nome:"Queijo, ricota",cat:"laticinios",kcal:135,prot:11.2,carb:2.0,fat:9.3,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:714,nome:"Requeijão, cremoso",cat:"laticinios",kcal:257,prot:8.5,carb:3.3,fat:23.7,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:715,nome:"Cream cheese",cat:"laticinios",kcal:350,prot:5.8,carb:2.7,fat:35.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:716,nome:"Creme de leite",cat:"laticinios",kcal:323,prot:2.4,carb:3.2,fat:34.0,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:717,nome:"Leite em pó, integral",cat:"laticinios",kcal:496,prot:26.0,carb:38.0,fat:27.0,fib:0.0,unit:"g",fonte:"TACO"},
+
+  // ÓLEOS E GORDURAS
+  {id:801,nome:"Azeite de oliva",cat:"gordura",kcal:884,prot:0.0,carb:0.0,fat:100.0,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:802,nome:"Óleo de soja",cat:"gordura",kcal:884,prot:0.0,carb:0.0,fat:100.0,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:803,nome:"Óleo de girassol",cat:"gordura",kcal:884,prot:0.0,carb:0.0,fat:100.0,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:804,nome:"Óleo de milho",cat:"gordura",kcal:884,prot:0.0,carb:0.0,fat:100.0,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:805,nome:"Óleo de coco",cat:"gordura",kcal:884,prot:0.0,carb:0.0,fat:100.0,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:806,nome:"Banha, suína",cat:"gordura",kcal:882,prot:0.0,carb:0.0,fat:99.0,fib:0.0,unit:"g",fonte:"TACO"},
+
+  // AÇÚCARES E DOCES
+  {id:901,nome:"Açúcar, cristal",cat:"carbo",kcal:387,prot:0.0,carb:99.5,fat:0.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:902,nome:"Açúcar, mascavo",cat:"carbo",kcal:375,prot:0.5,carb:96.6,fat:0.1,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:903,nome:"Mel de abelha",cat:"carbo",kcal:309,prot:0.3,carb:84.1,fat:0.0,fib:0.2,unit:"g",fonte:"TACO"},
+  {id:904,nome:"Rapadura",cat:"carbo",kcal:380,prot:1.0,carb:92.0,fat:0.0,fib:0.0,unit:"g",fonte:"TACO"},
+
+  // OLEAGINOSAS E SEMENTES
+  {id:1001,nome:"Castanha de caju, torrada",cat:"gordura",kcal:570,prot:18.0,carb:29.0,fat:46.0,fib:3.0,unit:"g",fonte:"TACO"},
+  {id:1002,nome:"Castanha-do-pará",cat:"gordura",kcal:659,prot:14.3,carb:11.7,fat:67.0,fib:7.5,unit:"g",fonte:"TACO"},
+  {id:1003,nome:"Nozes",cat:"gordura",kcal:620,prot:14.0,carb:13.7,fat:62.5,fib:4.1,unit:"g",fonte:"TACO"},
+  {id:1004,nome:"Semente de girassol",cat:"gordura",kcal:582,prot:23.4,carb:18.7,fat:51.5,fib:6.8,unit:"g",fonte:"TACO"},
+  {id:1005,nome:"Semente de chia",cat:"gordura",kcal:486,prot:16.5,carb:42.1,fat:30.7,fib:34.4,unit:"g",fonte:"TACO"},
+  {id:1006,nome:"Linhaça, dourada",cat:"gordura",kcal:534,prot:18.3,carb:28.9,fat:42.2,fib:27.3,unit:"g",fonte:"TACO"},
+  {id:1007,nome:"Gergelim",cat:"gordura",kcal:582,prot:17.7,carb:23.5,fat:50.4,fib:11.8,unit:"g",fonte:"TACO"},
+
+  // SUPLEMENTOS
+  {id:1101,nome:"Whey protein, concentrado",cat:"proteina",kcal:370,prot:75.0,carb:8.0,fat:7.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:1102,nome:"Albumina",cat:"proteina",kcal:363,prot:82.0,carb:5.0,fat:1.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:1103,nome:"Creatina",cat:"proteina",kcal:0,prot:0.0,carb:0.0,fat:0.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:1104,nome:"Dextrose",cat:"carbo",kcal:390,prot:0.0,carb:97.0,fat:0.0,fib:0.0,unit:"g",fonte:"TACO"},
+  {id:1105,nome:"Hipercalórico",cat:"carbo",kcal:380,prot:15.0,carb:75.0,fat:3.0,fib:0.0,unit:"g",fonte:"TACO"},
+
+  // BEBIDAS
+  {id:1201,nome:"Café, infusão 10%",cat:"vegetal",kcal:2,prot:0.3,carb:0.5,fat:0.0,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:1202,nome:"Chá, mate, infusão 10%",cat:"vegetal",kcal:2,prot:0.1,carb:0.4,fat:0.0,fib:0.0,unit:"ml",fonte:"TACO"},
+  {id:1203,nome:"Suco de laranja, natural",cat:"vegetal",kcal:47,prot:0.7,carb:11.6,fat:0.1,fib:0.2,unit:"ml",fonte:"TACO"},
+  {id:1204,nome:"Água de coco",cat:"vegetal",kcal:19,prot:0.7,carb:4.4,fat:0.1,fib:0.0,unit:"ml",fonte:"TACO"},
 ];
 
 let customFoods = [];
@@ -2453,44 +2579,62 @@ const MEDIDAS_PADRAO = {
 
 // Medidas específicas por alimento (id ou nome-chave)
 const MEDIDAS_ESPECIFICAS = {
-  // arroz
-  2:  [{label:'1 concha (80g)',g:80},{label:'1 concha grande (120g)',g:120},{label:'1 xícara cozido (175g)',g:175},{label:'1 colher de sopa (20g)',g:20},{label:'100g',g:100}],
-  // feijão
-  3:  [{label:'1 concha (80g)',g:80},{label:'1 concha grande (100g)',g:100},{label:'1 escumadeira (60g)',g:60},{label:'1/2 xícara (90g)',g:90},{label:'100g',g:100}],
-  // ovo inteiro
-  4:  [{label:'1 ovo pequeno (40g)',g:40},{label:'1 ovo médio (55g)',g:55},{label:'1 ovo grande (65g)',g:65},{label:'2 ovos (110g)',g:110},{label:'3 ovos (165g)',g:165}],
-  // pão de forma
-  5:  [{label:'1 fatia (25g)',g:25},{label:'2 fatias (50g)',g:50},{label:'3 fatias (75g)',g:75}],
-  // iogurte grego
-  7:  [{label:'1 pote (130g)',g:130},{label:'1/2 pote (65g)',g:65},{label:'1 colher de sopa (20g)',g:20},{label:'100g',g:100}],
-  // aveia
-  10: [{label:'1 xícara (90g)',g:90},{label:'1/2 xícara (45g)',g:45},{label:'2 colheres de sopa (20g)',g:20},{label:'3 colheres de sopa (30g)',g:30},{label:'100g',g:100}],
-  // banana
-  11: [{label:'1 unidade pequena (80g)',g:80},{label:'1 unidade média (100g)',g:100},{label:'1 unidade grande (130g)',g:130},{label:'1/2 banana (55g)',g:55}],
-  // batata doce
-  12: [{label:'1 unidade pequena (100g)',g:100},{label:'1 unidade média (150g)',g:150},{label:'1 unidade grande (200g)',g:200},{label:'1 fatia (50g)',g:50}],
-  // whey
-  17: [{label:'1 scoop (30g)',g:30},{label:'2 scoops (60g)',g:60},{label:'1,5 scoop (45g)',g:45}],
-  // tapioca
-  31: [{label:'1 tapioca pequena (50g)',g:50},{label:'1 tapioca média (70g)',g:70},{label:'1 tapioca grande (100g)',g:100},{label:'2 colheres de sopa (30g)',g:30}],
-  // feijão-preto
-  32: [{label:'1 concha (80g)',g:80},{label:'1 concha grande (100g)',g:100},{label:'1/2 xícara (90g)',g:90},{label:'100g',g:100}],
-  // lentilha
-  33: [{label:'1 concha (80g)',g:80},{label:'1/2 xícara cozida (100g)',g:100},{label:'1 colher de sopa seca (12g)',g:12}],
-  // mandioca
-  35: [{label:'1 pedaço médio (100g)',g:100},{label:'1 pedaço grande (150g)',g:150},{label:'1 fatia (60g)',g:60}],
-  // batata-doce cozida
-  36: [{label:'1 unidade pequena (100g)',g:100},{label:'1 unidade média (150g)',g:150},{label:'1 fatia (50g)',g:50}],
-  // milho verde
-  39: [{label:'1 espiga média (100g)',g:100},{label:'1/2 espiga (50g)',g:50},{label:'2 colheres de sopa (30g)',g:30}],
-  // açaí
-  49: [{label:'1 tigela pequena (200g)',g:200},{label:'1 tigela média (300g)',g:300},{label:'1 copo (150g)',g:150},{label:'100g',g:100}],
-  // mamão
-  50: [{label:'1 fatia média (130g)',g:130},{label:'1/4 mamão (200g)',g:200},{label:'1 fatia pequena (80g)',g:80}],
-  // manga
-  51: [{label:'1/2 manga (150g)',g:150},{label:'1 manga inteira (300g)',g:300},{label:'1 fatia (80g)',g:80}],
-  // abacate
-  52: [{label:'1/4 abacate (50g)',g:50},{label:'1/2 abacate (100g)',g:100},{label:'1 colher de sopa (15g)',g:15}],
+  // Arroz agulhinha cozido (101)
+  101: [{label:'1 concha (80g)',g:80},{label:'1 concha grande (120g)',g:120},{label:'1 xícara (175g)',g:175},{label:'1 colher de sopa (20g)',g:20},{label:'100g',g:100}],
+  // Arroz integral cozido (102)
+  102: [{label:'1 concha (80g)',g:80},{label:'1 concha grande (120g)',g:120},{label:'1 xícara (175g)',g:175},{label:'100g',g:100}],
+  // Aveia flocos (104)
+  104: [{label:'1 xícara (90g)',g:90},{label:'1/2 xícara (45g)',g:45},{label:'3 colheres de sopa (30g)',g:30},{label:'2 colheres de sopa (20g)',g:20},{label:'100g',g:100}],
+  // Tapioca goma (114)
+  114: [{label:'1 tapioca pequena (50g)',g:50},{label:'1 tapioca média (70g)',g:70},{label:'1 tapioca grande (100g)',g:100},{label:'2 colheres de sopa (30g)',g:30}],
+  // Batata cozida (206)
+  206: [{label:'1 unidade pequena (100g)',g:100},{label:'1 unidade média (150g)',g:150},{label:'1 unidade grande (200g)',g:200},{label:'1 fatia (50g)',g:50}],
+  // Batata-doce cozida (207)
+  207: [{label:'1 unidade pequena (100g)',g:100},{label:'1 unidade média (150g)',g:150},{label:'1 unidade grande (200g)',g:200},{label:'1 fatia (50g)',g:50}],
+  // Mandioca cozida (218)
+  218: [{label:'1 pedaço médio (100g)',g:100},{label:'1 pedaço grande (150g)',g:150},{label:'1 fatia (60g)',g:60}],
+  // Abacate (301)
+  301: [{label:'1/4 abacate (50g)',g:50},{label:'1/2 abacate (100g)',g:100},{label:'1 colher de sopa (15g)',g:15}],
+  // Banana nanica (304)
+  304: [{label:'1 unidade pequena (80g)',g:80},{label:'1 unidade média (100g)',g:100},{label:'1 unidade grande (130g)',g:130},{label:'1/2 banana (55g)',g:55}],
+  // Banana prata (305)
+  305: [{label:'1 unidade pequena (80g)',g:80},{label:'1 unidade média (100g)',g:100},{label:'1 unidade grande (120g)',g:120}],
+  // Açaí polpa (303)
+  303: [{label:'1 tigela pequena (200g)',g:200},{label:'1 tigela média (300g)',g:300},{label:'1 copo (150g)',g:150},{label:'100g',g:100}],
+  // Manga (318)
+  318: [{label:'1/2 manga (150g)',g:150},{label:'1 manga inteira (300g)',g:300},{label:'1 fatia (80g)',g:80}],
+  // Mamão papaia (317)
+  317: [{label:'1 fatia média (130g)',g:130},{label:'1/4 mamão (200g)',g:200},{label:'1 fatia pequena (80g)',g:80}],
+  // Mamão formosa (316)
+  316: [{label:'1 fatia média (150g)',g:150},{label:'1 fatia grande (200g)',g:200},{label:'1 fatia pequena (100g)',g:100}],
+  // Feijão carioca (402)
+  402: [{label:'1 concha (80g)',g:80},{label:'1 concha grande (100g)',g:100},{label:'1 escumadeira (60g)',g:60},{label:'1/2 xícara (90g)',g:90},{label:'100g',g:100}],
+  // Feijão preto (403)
+  403: [{label:'1 concha (80g)',g:80},{label:'1 concha grande (100g)',g:100},{label:'1/2 xícara (90g)',g:90},{label:'100g',g:100}],
+  // Lentilha (406)
+  406: [{label:'1 concha (80g)',g:80},{label:'1/2 xícara cozida (100g)',g:100},{label:'1 colher de sopa seca (12g)',g:12}],
+  // Grão-de-bico (405)
+  405: [{label:'1 concha (80g)',g:80},{label:'1/2 xícara (100g)',g:100},{label:'100g',g:100}],
+  // Ovo cozido (519)
+  519: [{label:'1 ovo pequeno (40g)',g:40},{label:'1 ovo médio (55g)',g:55},{label:'1 ovo grande (65g)',g:65},{label:'2 ovos (110g)',g:110},{label:'3 ovos (165g)',g:165}],
+  // Ovo clara (520)
+  520: [{label:'1 clara (30g)',g:30},{label:'2 claras (60g)',g:60},{label:'3 claras (90g)',g:90}],
+  // Whey concentrado (1101)
+  1101: [{label:'1 scoop (30g)',g:30},{label:'2 scoops (60g)',g:60},{label:'1,5 scoop (45g)',g:45}],
+  // Leite integral (705)
+  705: [{label:'1 copo (200ml)',g:200},{label:'1 xícara (240ml)',g:240},{label:'1/2 copo (100ml)',g:100}],
+  // Leite desnatado (704)
+  704: [{label:'1 copo (200ml)',g:200},{label:'1 xícara (240ml)',g:240},{label:'1/2 copo (100ml)',g:100}],
+  // Iogurte integral (703)
+  703: [{label:'1 pote (170g)',g:170},{label:'1/2 pote (85g)',g:85},{label:'100g',g:100}],
+  // Iogurte desnatado (702)
+  702: [{label:'1 pote (170g)',g:170},{label:'1/2 pote (85g)',g:85},{label:'100g',g:100}],
+  // Milho verde cozido (118)
+  118: [{label:'1 espiga média (100g)',g:100},{label:'1/2 espiga (50g)',g:50},{label:'2 colheres de sopa (30g)',g:30}],
+  // Pão francês (112)
+  112: [{label:'1 unidade (50g)',g:50},{label:'1/2 unidade (25g)',g:25},{label:'2 unidades (100g)',g:100}],
+  // Pão integral (113)
+  113: [{label:'1 fatia (25g)',g:25},{label:'2 fatias (50g)',g:50},{label:'3 fatias (75g)',g:75}],
 };
 
 // Retorna medidas disponíveis para um alimento
@@ -2565,8 +2709,7 @@ function atualizarPreviewMacros() {
 }
 
 // ===================== API NUTRIÇÃO =====================
-// Estratégia: 1º TACO/UNICAMP (🇧🇷 primária), 2º Open Food Facts Brasil, 3º USDA fallback
-const USDA_KEY = 'DEMO_KEY'; // Gratuito — troque por chave própria em fdc.nal.usda.gov/api-key-signup
+// Estratégia: 1º TACO/UNICAMP (🇧🇷 primária), 2º Open Food Facts Brasil
 let modalApiSelectedFood = null;
 let modalCurrentTab = 'local';
 
@@ -2609,27 +2752,6 @@ function normalizarOFF(produto) {
     fib:  Math.round((n['fiber_100g'] || 0) * 10) / 10,
     unit: 'g',
     fonte: 'Open Food Facts'
-  };
-}
-
-// --- Utilitário: normaliza dados do USDA ---
-function normalizarUSDA(item) {
-  const nutrientes = item.foodNutrients || [];
-  const get = (id) => {
-    const n = nutrientes.find(x => x.nutrientId === id || x.nutrientNumber === String(id));
-    return n ? Math.round((n.value || 0) * 10) / 10 : 0;
-  };
-  return {
-    id: 'usda_' + item.fdcId,
-    nome: item.description || 'Alimento USDA',
-    cat: inferirCategoria(item.description + ' ' + (item.foodCategory || '')),
-    kcal: get(1008),
-    prot: get(1003),
-    carb: get(1005),
-    fat:  get(1004),
-    fib:  get(1079),
-    unit: 'g',
-    fonte: 'USDA FoodData'
   };
 }
 
@@ -2703,21 +2825,6 @@ async function buscarAlimentoAPI() {
       if (offResults.length > 0) {
         resultados = [...resultados, ...offResults].slice(0, 10);
         fontes.push('Open Food Facts');
-      }
-    } catch(e) {}
-  }
-
-  // 3ª prioridade: USDA como fallback final
-  if (resultados.length < 3) {
-    try {
-      status.textContent = '🔄 Buscando no USDA como complemento...';
-      const urlUSDA = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(query)}&pageSize=6&api_key=${USDA_KEY}`;
-      const respUSDA = await fetch(urlUSDA);
-      const dataUSDA = await respUSDA.json();
-      const itensUSDA = (dataUSDA.foods || []).map(normalizarUSDA);
-      if (itensUSDA.length > 0) {
-        resultados = [...resultados, ...itensUSDA].slice(0, 10);
-        fontes.push('USDA FoodData');
       }
     } catch(e) {}
   }
@@ -2905,17 +3012,6 @@ async function buscarModalAPI() {
         return (n['energy-kcal_100g'] || n['energy_100g']) && p.product_name;
       }).slice(0, 5).map(normalizarOFF);
       resultados = [...resultados, ...offResults].slice(0, 8);
-    } catch(e) {}
-  }
-
-  // 3ª prioridade: USDA
-  if (resultados.length < 2) {
-    try {
-      const url = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(query)}&pageSize=5&api_key=${USDA_KEY}`;
-      const resp = await fetch(url);
-      const data = await resp.json();
-      const usda = (data.foods || []).map(normalizarUSDA);
-      resultados = [...resultados, ...usda].slice(0, 6);
     } catch(e) {}
   }
 
