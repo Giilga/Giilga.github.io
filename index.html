@@ -3150,9 +3150,8 @@ async function generatePlanWithAI() {
   const btn = document.getElementById('btn-generate-ai');
   const output = document.getElementById('ai-plan-output');
   
-  // 1. AQUI VOCÊ COLOCA A URL DO SEU WORKER DA CLOUDFLARE
-  // Exemplo: https://nutriplan-gemini.seu-usuario.workers.dev
-  const WORKER_URL = "SUA_URL_DO_WORKER_AQUI"; 
+  // 1. IMPORTANTE: Substitua pela URL do seu Worker da Cloudflare
+  const WORKER_URL = "https://nutriplan-gemini.SEU-USUARIO.workers.dev"; 
 
   btn.disabled = true;
   output.innerHTML = '<div class="ai-loading">⌛ Gerando plano personalizado...</div>';
@@ -3163,7 +3162,7 @@ async function generatePlanWithAI() {
     Atividade: ${userSettings.activity}
     Gere 6 refeições detalhadas. Responda em Português de forma clara.`;
 
-  // Agora usamos o TRY/CATCH para tratar o erro de cota que você recebeu
+  // Adicionando o Try/Catch para o erro de cota não travar o site
   try {
     const response = await fetch(WORKER_URL, {
       method: 'POST',
@@ -3176,22 +3175,21 @@ async function generatePlanWithAI() {
     const data = await response.json();
 
     if (!response.ok) {
-      // Se a cota estourar, o erro cai aqui
-      throw new Error(data.error?.message || "Limite de requisições atingido. Tente em 1 minuto.");
+      throw new Error(data.error?.message || "Erro de cota. Tente novamente em 1 minuto.");
     }
 
     const aiText = data.candidates[0].content.parts[0].text;
     output.innerHTML = `<div style="white-space: pre-wrap; line-height: 1.6; color: var(--text); padding: 15px;">${aiText}</div>`;
 
   } catch (err) {
-    // Exibe o erro de cota de forma amigável para o usuário
-    output.innerHTML = `<div style="color:var(--red); padding:15px; border:1px solid var(--red); border-radius:8px;">Erro: ${err.message}</div>`;
+    // Exibe o erro de forma amigável se a cota estourar
+    output.innerHTML = `<div style="color:#ff5555; padding:15px; border:1px solid #ff5555; border-radius:8px;">❌ ${err.message}</div>`;
   } finally {
     btn.disabled = false;
   }
 }
 
-// Inicialização final do seu script
+// Inicialização final
 initMobile();
 </script>
 
