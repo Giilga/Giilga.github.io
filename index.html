@@ -3147,10 +3147,10 @@ document.querySelectorAll('.modal-bg').forEach(m => m.addEventListener('click', 
 
 async function generatePlanWithAI() {
   const btn = document.getElementById('btn-generate-ai');
-  const output = document.getElementById('ai-plan-output');
+  const output = document.getElementById('ai-output');
   
   // SUBSTITUA ABAIXO PELA SUA URL REAL DA CLOUDFLARE
-  const WORKER_URL = "nutriplan.gillgamesh53.workers.dev"; 
+  const WORKER_URL = "https://nutriplan.gillgamesh53.workers.dev"; 
 
   btn.disabled = true;
   output.innerHTML = '<div class="ai-loading">⌛ Gerando plano personalizado...</div>';
