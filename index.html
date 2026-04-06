@@ -3145,21 +3145,25 @@ document.querySelectorAll('.modal-bg').forEach(m => m.addEventListener('click', 
   }, { passive: true });
 })();
 
-async function generatePlanWithAI() {
-  const btn = document.getElementById('btn-gerar');
-  const output = document.getElementById('ai-output');
+async function generateAIPan() {
+  // IDs baseados nas linhas 579 e 580 do seu HTML
+  const generateBtn = document.getElementById('btn-gerar'); 
+  const outputDisplay = document.getElementById('ai-output'); 
   
-  // SUBSTITUA ABAIXO PELA SUA URL REAL DA CLOUDFLARE
+  // URL corrigida com HTTPS
   const WORKER_URL = "https://nutriplan.gillgamesh53.workers.dev"; 
 
-  btn.disabled = true;
-  output.innerHTML = '<div class="ai-loading">⌛ Gerando plano personalizado...</div>';
+  if (!generateBtn || !outputDisplay) return;
 
-  const promptText = `Aja como um nutricionista. Gere um plano alimentar detalhado para:
-    Objetivo: ${userSettings.goal}
-    Peso: ${userSettings.weight}kg, Altura: ${userSettings.height}cm, Idade: ${userSettings.age}
-    Atividade: ${userSettings.activity}
-    Gere 6 refeições detalhadas. Responda em Português de forma clara.`;
+  generateBtn.disabled = true;
+  outputDisplay.innerHTML = '<div class="ai-loading">⌛ Generating personalized plan...</div>';
+
+  // Montando o prompt para a IA
+  const promptText = `Act as a professional nutritionist. Create a detailed meal plan for:
+    Goal: ${userSettings.goal}
+    Weight: ${userSettings.weight}kg, Height: ${userSettings.height}cm, Age: ${userSettings.age}
+    Activity Level: ${userSettings.activity}
+    Provide 6 detailed meals. Respond in Portuguese (Brazil).`;
 
   try {
     const response = await fetch(WORKER_URL, {
@@ -3170,20 +3174,22 @@ async function generatePlanWithAI() {
       })
     });
 
-    const data = await response.json();
-
     if (!response.ok) {
-      throw new Error(data.error?.message || "Erro de cota ou no servidor.");
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Server Error");
     }
 
-    const aiText = data.candidates[0].content.parts[0].text;
-    // Removi a cor fixa para respeitar o seu CSS de variáveis
-    output.innerHTML = `<div style="white-space: pre-wrap; line-height: 1.6; padding: 15px;">${aiText}</div>`;
+    const data = await response.json();
+    const aiResponse = data.candidates[0].content.parts[0].text;
+    
+    // Exibe o resultado formatado
+    outputDisplay.innerHTML = `<div style="white-space: pre-wrap; padding: 15px;">${aiResponse}</div>`;
 
   } catch (err) {
-    output.innerHTML = `<div style="color:var(--red); padding:15px; border:1px solid var(--red); border-radius:8px;">❌ Erro: ${err.message}</div>`;
+    console.error("Fetch error:", err);
+    outputDisplay.innerHTML = `<div style="color: #ff5f5f; padding: 15px;">❌ Error: ${err.message}</div>`;
   } finally {
-    btn.disabled = false;
+    generateBtn.disabled = false;
   }
 }
 
