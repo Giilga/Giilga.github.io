@@ -1848,10 +1848,6 @@ Use alimentos comuns e acessíveis no Brasil com quantidades realistas. Prefira 
 
   let planoJSON = null;
   try {
-    // Verifica se a chave foi configurada
-    if (GEMINI_KEY.includes('Demo_Substitua')) {
-      throw new Error('CHAVE_NAO_CONFIGURADA');
-    }
     const raw = await chamarGemini(prompt);
     planoJSON = JSON.parse(raw);
   } catch(e) {
